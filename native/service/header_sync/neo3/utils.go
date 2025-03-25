@@ -107,6 +107,8 @@ func VerifyCrossChainMsgSig(native *native.NativeService, magic uint32, crossCha
 	}
 	v1 := tx.VerifyMultiSignatureWitness(msg, witness)
 	if !v1 {
+		fmt.Println(fmt.Sprintf("ErrorErrorError, verify witness failed, height: %d，magic: %d, msg: %s, invScript: %s",
+			crossChainMsg.Index, magic, helper.BytesToHex(msg), crossChainMsg.Witnesses[0].Invocation))
 		return fmt.Errorf("verifyCrossChainMsg, verify witness failed, height: %d，magic: %d, msg: %s, invScript: %s",
 			crossChainMsg.Index, magic, helper.BytesToHex(msg), crossChainMsg.Witnesses[0].Invocation)
 	}

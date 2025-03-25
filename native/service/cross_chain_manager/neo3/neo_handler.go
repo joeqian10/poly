@@ -50,6 +50,7 @@ func (this *Neo3Handler) MakeDepositProposal(service *native.NativeService) (*sc
 		return nil, fmt.Errorf("neo3 MakeDepositProposal, side_chain_manager.GetSideChain error: %v", err)
 	}
 	if err := neo3.VerifyCrossChainMsgSig(service, helper.BytesToUInt32(sideChain.ExtraInfo), crossChainMsg); err != nil {
+		fmt.Println(fmt.Sprintf("ErrorErrorError: %v", err))
 		return nil, fmt.Errorf("neo3 MakeDepositProposal, VerifyCrossChainMsg error: %v", err)
 	}
 

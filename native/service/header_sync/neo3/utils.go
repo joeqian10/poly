@@ -20,6 +20,7 @@ package neo3
 import (
 	"fmt"
 	"github.com/joeqian10/neo3-gogogo/crypto"
+	"github.com/joeqian10/neo3-gogogo/helper"
 	"github.com/joeqian10/neo3-gogogo/sc"
 	"github.com/joeqian10/neo3-gogogo/tx"
 	"github.com/polynetwork/poly/common"
@@ -86,7 +87,7 @@ func VerifyCrossChainMsgSig(native *native.NativeService, magic uint32, crossCha
 	}
 	msg, err := crossChainMsg.GetMessage(magic)
 	if err != nil {
-		return fmt.Errorf("verifyCrossChainMsg, unable to get unsigned message of neo crossChainMsg")
+		return fmt.Errorf("verifyCrossChainMsg, unable to get unsigned message of neo crossChainMsg, magic: %d, error: %v", magic, err)
 	}
 	// verify witness
 	if len(crossChainMsg.Witnesses) == 0 {
@@ -106,7 +107,8 @@ func VerifyCrossChainMsgSig(native *native.NativeService, magic uint32, crossCha
 	}
 	v1 := tx.VerifyMultiSignatureWitness(msg, witness)
 	if !v1 {
-		return fmt.Errorf("verifyCrossChainMsg, verify witness failed, height: %d", crossChainMsg.Index)
+		return fmt.Errorf("verifyCrossChainMsg, verify witness failed, height: %d，magic: %d, msg: %s, invScript: %s",
+			crossChainMsg.Index, magic, helper.BytesToHex(msg), crossChainMsg.Witnesses[0].Invocation)
 	}
 	return nil
 }

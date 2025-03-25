@@ -35,7 +35,6 @@ import (
 	"github.com/polynetwork/poly/native/service/header_sync/msc"
 	"github.com/polynetwork/poly/native/service/header_sync/neo"
 	"github.com/polynetwork/poly/native/service/header_sync/neo3"
-	"github.com/polynetwork/poly/native/service/header_sync/neo3legacy"
 	"github.com/polynetwork/poly/native/service/header_sync/okex"
 	"github.com/polynetwork/poly/native/service/header_sync/ont"
 	"github.com/polynetwork/poly/native/service/header_sync/pixiechain"
@@ -47,7 +46,7 @@ import (
 	"github.com/polynetwork/poly/native/service/utils"
 )
 
-//Register methods of node_manager contract
+// Register methods of node_manager contract
 func RegisterHeaderSyncContract(native *native.NativeService) {
 	native.Register(hscommon.SYNC_GENESIS_HEADER, SyncGenesisHeader)
 	native.Register(hscommon.SYNC_BLOCK_HEADER, SyncBlockHeader)
@@ -66,8 +65,6 @@ func GetChainHandler(router uint64) (hscommon.HeaderSyncHandler, error) {
 		return neo.NewNEOHandler(), nil
 	case utils.NEO3_ROUTER:
 		return neo3.NewNeo3Handler(), nil
-	case utils.NEO3_LEGACY_ROUTER:
-		return neo3legacy.NewNeo3Handler(), nil
 	case utils.COSMOS_ROUTER:
 		return cosmos.NewCosmosHandler(), nil
 	case utils.QUORUM_ROUTER:
